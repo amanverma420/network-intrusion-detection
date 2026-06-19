@@ -1,8 +1,11 @@
 venv/
 __pycache__/
 
-*.pkl
-*.keras
+!encoders.pkl
+!scaler.pkl
+!feature_columns.pkl
+!random_forest_model.pkl
+!cnn_model.keras
 
 *.csv
 
