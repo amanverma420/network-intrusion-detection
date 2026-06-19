@@ -19,7 +19,7 @@ from tensorflow.keras.layers import Conv1D, MaxPooling1D, Flatten, Dense, Input
 print("⏳ Loading and clearing dataset discrepancies...")
 
 # 1. Load Data
-dataset = pd.read_csv("Latest.csv")
+dataset = pd.read_csv("data/Latest.csv")
 dataset.drop_duplicates(inplace=True)
 
 # 2. Drop rare attack profiles BEFORE encoding so numbering remains sequential
@@ -39,7 +39,7 @@ for col in obj_cols:
     encoders[col] = le
 
 # Save encoder mappings
-joblib.dump(encoders, "encoders.pkl")
+joblib.dump(encoders, "models/encoders.pkl")
 
 # 4. Split Target and Features
 X = dataset.drop(columns=["connection"])
@@ -47,7 +47,7 @@ y = dataset["connection"]
 num_classes = len(np.unique(y))
 
 # Save structural configurations 
-joblib.dump(list(X.columns), "feature_columns.pkl")
+joblib.dump(list(X.columns), "models/feature_columns.pkl")
 
 # Safe stratification split
 X_train, X_test, y_train, y_test = train_test_split(
@@ -59,13 +59,13 @@ print("⚖️ Normalizing and scaling structural data features...")
 scaler = StandardScaler()
 X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
-joblib.dump(scaler, "scaler.pkl")
+joblib.dump(scaler, "models/scaler.pkl")
 
 # 6. Train & Save Random Forest Model
 print("🌲 Fitting Random Forest Classifier...")
 rf_model = RandomForestClassifier(n_estimators=100, random_state=0)
 rf_model.fit(X_train_scaled, y_train)
-joblib.dump(rf_model, "random_forest_model.pkl")
+joblib.dump(rf_model, "models/random_forest_model.pkl")
 
 # 7. Train & Save Convolutional Neural Network (CNN)
 print("🧠 Building and fitting Deep Learning CNN Model...")
@@ -83,6 +83,6 @@ cnn_model = Sequential([
 
 cnn_model.compile(optimizer="adam", loss="sparse_categorical_crossentropy", metrics=["accuracy"])
 cnn_model.fit(X_train_cnn, y_train, epochs=3, batch_size=64, verbose=1)
-cnn_model.save("cnn_model.keras")
+cnn_model.save("models/cnn_model.keras")
 
 print("🎉 Setup finished successfully! All serialization assets are compiled.")

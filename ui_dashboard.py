@@ -40,11 +40,11 @@ st.markdown("""
 @st.cache_resource
 def load_assets():
     return (
-        joblib.load("encoders.pkl"),
-        joblib.load("scaler.pkl"),
-        joblib.load("feature_columns.pkl"),
-        joblib.load("random_forest_model.pkl"),
-        tf.keras.models.load_model("cnn_model.keras")
+        joblib.load("models/encoders.pkl"),
+        joblib.load("models/scaler.pkl"),
+        joblib.load("models/feature_columns.pkl"),
+        joblib.load("models/random_forest_model.pkl"),
+        tf.keras.models.load_model("models/cnn_model.keras")
     )
 
 encoders, scaler, feature_columns, rf_model, cnn_model = load_assets()

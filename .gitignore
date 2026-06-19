@@ -1,14 +1,10 @@
 venv/
+.env
+
+# Python/Jupyter cache
 __pycache__/
-
-!encoders.pkl
-!scaler.pkl
-!feature_columns.pkl
-!random_forest_model.pkl
-!cnn_model.keras
-
-*.csv
-
 .ipynb_checkpoints/
 
-.env
+# Large Datasets (exclude raw and edited data files from version control)
+data/*.csv
+*.csv

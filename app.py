@@ -17,11 +17,11 @@ app = FastAPI(title="Network Intrusion Detection API")
 print("⏳ Initializing pipeline assets...")
 
 # Load all pipeline components globally on startup
-encoders = joblib.load("encoders.pkl")
-scaler = joblib.load("scaler.pkl")
-feature_columns = joblib.load("feature_columns.pkl")
-rf_model = joblib.load("random_forest_model.pkl")
-cnn_model = tf.keras.models.load_model("cnn_model.keras")
+encoders = joblib.load("models/encoders.pkl")
+scaler = joblib.load("models/scaler.pkl")
+feature_columns = joblib.load("models/feature_columns.pkl")
+rf_model = joblib.load("models/random_forest_model.pkl")
+cnn_model = tf.keras.models.load_model("models/cnn_model.keras")
 
 class NetworkTrafficInput(BaseModel):
     features: dict
